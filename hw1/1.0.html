@@ -1,0 +1,218 @@
+<meta charset="utf-8">
+
+<head>
+<title>105703021</title>
+</head>
+<body>
+<body align="center">
+
+<h1 style="color:purple">108年大專畢業生就業預測</h1>
+<h1 align="center">
+
+<h4 style="color:lightblue">篩選條件：103～107年畢業，所有學門、所有性別</h2>
+<h4 align="center">
+<hr/>
+
+
+<h2 style="color:pink">各行業就業人數/平均工資分析</h2>
+<h2 align="center">
+
+<svg width="800" height="544"></svg>
+
+</body>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+  
+var data = [
+{fee:41842, num:"221703人",major:"製造業"},
+{fee:32975, num:"172915人",major:"批發零售業"},
+{fee:39898, num:"112938人",major:"醫療保健"},
+{fee:39159, num:"80940人", major:"專業、科學與技術"},
+{fee:36219, num:"60159人", major:"教育業"},
+{fee:41545, num:"53572人", major:"出版、影音製作業"},
+{fee:29383, num:"51038人", major:"住宿及餐飲業"},
+{fee:46441, num:"45413人", major:"金融及保險業"},
+{fee:31538, num:"32983人", major:"營建工程業"},
+{fee:32192, num:"31014人", major:"其他服務業"},
+{fee:31254, num:"29558人", major:"支援服務業"},
+{fee:38866, num:"24664人", major:"運輸及倉儲業"},
+{fee:33267, num:"12668人", major:"不動產業"},
+{fee:36568, num:"12272人", major:"公共行政及國防"},
+{fee:34734, num:"10998人", major:"藝術、娛樂及休閒"},
+{fee:30189, num:"6245人", major:"農林漁牧業"},
+{fee:32664, num:"2358人", major:"用水供應以及污染"},
+{fee:40618, num:"1839人", major:"電力"},
+{fee:31981, num:"196人", major:"礦業"}
+];
+
+
+
+  
+var svg = d3.select("svg"),
+    margin = {top: 40, right: 40, bottom: 100, left: 80},
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom;
+
+
+
+
+var colors = d3.scaleOrdinal()
+colors.range(['#A2A2C9','#C1B0DF','#DDCFE6','#C0D0E8','#B3D4E9','#AAC9CE'])
+
+
+colors.domain([
+"製造業","批發零售業","醫療保健","專業、科學與技術","教育業","出版、影音製作業",
+"住宿及餐飲業","金融及保險業","營建工程業","其他服務業","支援服務業","運輸及倉儲業",
+"不動產業","公共行政及國防","藝術、娛樂及休閒","農林漁牧業","用水供應以及污染","電力","礦業"
+])
+
+var g = svg.append("g")
+   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+// 设置x,y轴
+var x = d3.scaleBand()
+	.rangeRound([0, width])
+	.padding(0.1)
+	.domain(data.map(function(d) { return d.num; })),
+    y= d3.scaleLinear().rangeRound([height, 0])
+	.domain([0, d3.max(data, function(d) { return d.fee; })]);
+
+
+ 
+  
+// 设置x轴
+  g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x).tickFormat(function(d) {
+            var f = data.filter(function(e) {
+            return e.num === d;
+          });
+       return f[0].major;}))
+       .selectAll("text")
+      .attr("y", 0)
+      .attr("x", -10)
+      .attr("dy", ".25em")
+      .attr("transform", "rotate(-90)")
+      .style('font','11px sans-serif')
+      .style("text-anchor", "end");
+
+
+ g.append("text")
+      .attr("class","axistext")
+      .attr("transform", "rotate(-90)")
+      .attr("x", -height-10)
+      .attr("y", width+20)
+      .style('fill', '#DA808F')
+      .style('font','15px sans-serif')
+      .text("所屬行業");  
+
+
+// 设置y轴
+  g.append("g")
+      .attr("class", "axis axis--y")
+      .call(d3.axisLeft(y).ticks(10))
+      .append('text')
+      .attr('y', -16)
+      .attr('dy', '.71em')
+      .style('text-anchor', 'middle')
+      .style('fill', '#DA808F')
+      .style('font','15px sans-serif')
+      .text('平均提繳工資 (NT$)');
+  
+
+
+//畫柱子
+var bars = g.selectAll(".bar")
+    .data(data)
+    .enter()
+    bars.append("rect")
+        .attr("class", "bar")
+	.attr("fill", function(d, i) { return colors(d.major) })
+        .attr("x", function(d) { return x(d.num); })
+	.attr("y", height) // 控制动画由下而上    
+        .attr("width", x.bandwidth())
+	.attr("height", 0) // 控制动画由下而上
+	.transition()
+      	.duration(1000)
+      	.ease(d3.easeBounceInOut)
+      	.delay(function(d, i) {return i * 200;})
+        .attr("y", function(d) { return y(d.fee); })
+	.attr("height", function(d) { return height - y(d.fee); })
+          
+
+ var bar_fees = g.selectAll(".barfee")
+    .data(data)
+    .enter()
+    bar_fees.append("text")
+	.attr("class", "barfee")
+	.attr('fill', '#727E82')
+	.attr('font-size','10px')
+	.attr('text-anchor', 'middle')
+	.attr("x", function(d) { return x(d.num)+(x.bandwidth()/2) })
+	.attr("y", function(d) { return y(d.fee); })
+	.attr("dy", "-0.5em")
+	.text(function(d) { return '$'+d.fee })
+
+
+
+                
+var bar_nums = g.selectAll(".barnum")
+    .data(data)
+    .enter()
+    bar_nums.append("text")
+	.attr("class", "barnum")
+	.attr('fill', '#525156')
+	.attr('font-size','14px')
+	.attr("transform", "rotate(-90)")
+	.attr("x", -height+25)
+	.attr("y", function(d) { return x(d.num)+(x.bandwidth()/2); })
+	.attr("dy","0.5em")
+	.text(function(d) { return d.num; })
+	
+
+
+</script>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+xmlns:xlink="http://www.w3.org/1999/xlink">
+   <defs>
+    <path id="path1" d="M75,20 a1,1 0 0,0 100,0" />
+  </defs>
+  <text x="10" y="100" style="fill:lightblue;">
+    <textPath xlink:href="#path1">Made by 秋潔</textPath>
+  </text>
+</svg>
+
+
+
+
+
+<head>
+<style>
+a:link {text-decoration:none;}    
+a:visited {text-decoration:none;} 
+a:hover {text-decoration:underline;}   
+a:active {text-decoration:underline;}  
+</style>
+</head>
+
+<body>
+<p><b><a href="https://www.mol.gov.tw/announcement/2099/33959/" target="_blank">資料來源：勞動部(可點擊連結）</a></b>
+</p>
+<p style="font:15px sans-serif">從產業別來看，平均薪資最高的行業是金融及保險業，每月平均為 46,441 元；</p><p style="font:15px sans-serif">
+其次為製造業，每月平均為 41,842 元；第三為出版、影音製作、傳播及資通訊服務業，每月平均為 41,545 元。
+</p><p style="font:15px sans-serif">
+至於末端行業，則是住宿及餐飲業，每月平均僅有 29,383 元。
+</p><p style="font:15px sans-serif">
+另外，從就業人數來看，最熱門的產業是製造業，共 22 萬 1,700 位畢業生選擇投入；而人數最低則為礦業及土石採取業，僅 196 人。
+</p>
+
+</body>
+
+
+
+
+

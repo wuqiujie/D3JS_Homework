@@ -1,0 +1,273 @@
+<meta charset="utf-8">
+
+<head>
+<title>108年04月底大專畢業生就業觀測</title>
+</head>
+<body>
+<body align="center">
+
+<h1 style="font-family:verdana">108年04月底大專畢業生就業觀測</h1>
+<hr />
+<h1 align="center">
+
+<h2 style="color:lightblue">各行業人數分析</h2>
+<h2 align="center">
+<p>
+
+<svg width="800" height="544"></svg>
+
+</body>
+
+
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+  
+var data = [
+{fee:"$41,842", num:221703,major:"製造業"},
+{fee:"$32,975", num:172915,major:"批發零售業"},
+{fee:"$39,898", num:112938,major:"醫療保健"},
+{fee:"$39,159", num:80940, major:"專業、科學與技術"},
+{fee:"$36,219", num:60159, major:"教育業"},
+{fee:"$41,545", num:53572, major:"出版、影音製作業"},
+{fee:"$29,383", num:51038, major:"住宿及餐飲業"},
+{fee:"$46,441", num:45413, major:"金融及保險業"},
+{fee:"$31,538", num:32983, major:"營建工程業"},
+{fee:"$32,192", num:31014, major:"其他服務業"},
+{fee:"$31,254", num:29558, major:"支援服務業"},
+{fee:"$38,866", num:24664, major:"運輸及倉儲業"},
+{fee:"$33,267", num:12668, major:"不動產業"},
+{fee:"$36,568", num:12272, major:"公共行政及國防"},
+{fee:"$34,734", num:10998, major:"藝術、娛樂及休閒"}
+];
+
+
+
+  
+var svg = d3.select("svg"),
+    margin = {top: 40, right: 20, bottom: 120, left: 80},
+  
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom;
+
+
+
+
+var colors = d3.scaleOrdinal()
+colors.range([
+'#eee5f8','#e0e5df','#f8ebd8','#e0cdcf','#c1cbd7',
+'#c9c0d3','#b5c4b1','#d8caaf','#ead0d1','#9ca8b8',
+'#c5b8a5','#965454','#7a7281','#8696a7','#7b8b6f'])
+
+
+
+colors.domain([
+"製造業","批發零售業","醫療保健","專業、科學與技術","教育業","出版、影音製作業",
+"住宿及餐飲業","金融及保險業","營建工程業","其他服務業","支援服務業","運輸及倉儲業","不動產業",
+"公共行政及國防","藝術、娛樂及休閒"
+])
+
+
+var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+    y = d3.scaleLinear().rangeRound([height, 0]);
+
+
+
+
+
+let xAxis = 
+    d3.axisBottom(x).tickFormat(function(d) {
+    var filtered = data.filter(function(e) {
+    return e.fee === d;
+    });
+    return filtered[0].major;}),
+    yAxis = d3.axisLeft(y);
+  
+  
+
+var g = svg.append("g")
+   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  x.domain(data.map(function(d) { return d.fee; }));
+  y.domain([0, d3.max(data, function(d) { return d.num; })]);
+
+  g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x).tickFormat(function(d) {
+            var filtered = data.filter(function(e) {
+            return e.fee === d;
+          });
+       return filtered[0].major;}))
+      .selectAll("text")
+      .attr("y", 0)
+      .attr("x", -8)
+      .attr("dy", ".35em")
+      .attr("transform", "rotate(-90)")
+      .style("text-anchor", "end");
+
+  g.append("g")
+      .attr("class", "axis axis--y")
+      .call(d3.axisLeft(y).ticks(4))
+ 
+
+/*text*/ 
+  g.append("text")
+      .attr("class","axistext")
+      .attr("x", -5)
+      .attr("y", -5)
+      .attr("text-anchor", "end")
+      .text("提繳人數");
+ 
+  g.append("text")
+      .attr("class","axistext")
+      .attr("transform", "rotate(-90)")
+      .attr("x", -height-10)
+      .attr("y", width+10)
+      .text("行業");  
+  
+  
+
+
+    var bars = g.selectAll(".bar")
+    .data(data)
+    .enter()
+    bars.append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.fee); })
+      .attr("y", function(d) { return y(d.num); })
+      .attr("width", x.bandwidth())
+      .attr("height", function(d) { return height - y(d.num); })
+      .attr("fill", function(d, i) { return colors(d.major) })
+      .attr("fee", function(d) { return d.fee; })
+   
+
+ var bartexts = g.selectAll(".bartext")
+    .data(data)
+    .enter()
+    bartexts.append("text")
+      .attr("class", "bartext")
+      .attr("x", function(d) { return x(d.fee)+(x.bandwidth()/2); })
+      .attr("y", function(d) { return y(d.num); })
+      .attr("text-anchor", "middle")
+      .attr("dy", "-.25em")
+      .text(function(d) { return d.num; })
+      .attr("fee", function(d) { return d.fee; })
+      .attr('font','12px sans-serif');
+    
+var barovers = g.selectAll(".baroverlay")
+    .data(data)
+    .enter()
+    barovers.append("text")
+      .attr("class", "baroverlay")
+      .attr("transform", "rotate(-90)")
+      .attr("y", function(d) { return x(d.fee)+(x.bandwidth()/2); })
+      .attr("x", -height+5)
+      .attr("dy",".3em")
+      .style('font-weight', 'bold')
+      .attr("opacity",0.2)
+      .text(function(d) { return d.fee; })
+      .attr("fee", function(d) { return d.fee; })
+
+   
+
+ var barpanels = g.selectAll(".barpanel")
+    .data(data)
+    .enter()
+    barpanels.append("rect")
+      .attr("class", "barpanel")
+      .attr("x", function(d) { return x(d.fee); })
+      .attr("y", 0)
+      .attr("width", x.bandwidth()+10)
+      .attr("height", height)
+      .attr("fill", 'black')
+      .attr("fee", function(d) { return d.fee; })
+      .attr('opacity',0)
+      .on("mouseover",function(){
+                    d3.select(this)
+                    .attr("opacity",0);
+                    var fee = d3.select(this).attr("fee");
+                    g.selectAll(".bar")
+                    .filter(function(){return d3.select(this).attr('fee') != fee;})
+                    .attr('opacity',0.3);
+                    g.selectAll(".bartext")
+                    .filter(function(){return d3.select(this).attr('fee') != fee;})
+                    .attr('opacity',0);
+                    g.selectAll(".bartext")
+                    .filter(function(){return d3.select(this).attr('fee') == fee;})
+                    .attr('y',0)
+
+                    g.selectAll(".baroverlay")
+                    .filter(function(){return d3.select(this).attr('fee') == fee;})
+                    .attr('opacity',0.9);
+                    g.selectAll(".baroverlay")
+                    .filter(function(){return d3.select(this).attr('fee') != fee;})
+                    .attr('opacity',0.1);
+                    g.selectAll(".axis.axis--x")
+                   
+                    })
+
+      .on("mouseout",function(){
+                    d3.select(this)
+                    .attr("opacity",0)
+                    var fee = d3.select(this).attr("fee");
+                    g.selectAll(".bar")
+                    .filter(function(d){return d3.select(this).attr('fee') != fee;})
+                    .attr('opacity',1);
+
+                    g.selectAll(".bartext")
+                    
+                    .attr("y", function(d) { return y(d.num); })
+                    .attr('opacity',1)
+
+                    g.selectAll(".baroverlay")
+           
+                    .attr('opacity',0.2);
+                    })
+  
+  
+
+</script>
+<style>
+
+
+
+  /*number*/
+.bartext {
+  fill: gray;
+  font: 12px sans-serif;
+  text-anchor: middle;
+}
+
+
+  /*fee*/
+ .baroverlay{
+   Fill:black;
+   font:15px sans-serif;
+   text-anchor: start;
+
+  }
+  
+/*軸文字*/
+.axistext{
+  fill: pink;
+  font: 15px sans-serif;
+  text-anchor: end;
+}
+
+ /*軸項目*/
+.axis--x text {
+  fill: black;
+  font-family: sans-serif;
+  font-size: 12px;
+}
+
+ 
+</style>
+
+
+
+<p>資料來源：勞動部</p>
+
+
