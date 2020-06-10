@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>延禧宮略+甄嬛傳+如懿傳+還珠格格人物關係圖</title>
+</head>
+<body>
+<body align="center">
+
+
+<h2 style="color:black">一張圖带你讀懂《清朝那些事兒》人物關係</h1>
+<h2 align="center">
+
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script>
+
+
+	var width = 1500;
+        var height =800;
+	
+
+         
+	    var svg = d3.select("body")
+                        .append("svg")
+                        .attr("width",width)
+                        .attr("height",height)
+ 			.attr("style", "background-color:" + "#fffaf4");
+ 
+
+ 
+
+ 
+                       
+
+            var nodes = [ { name: "年妃",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588500196390&di=92e299b83ed611b63fd567f20889e1af&imgtype=0&src=http%3A%2F%2Fztd00.photos.bdimg.com%2Fztd%2Fw%3D700%3Bq%3D50%2Fsign%3D1ea26727d9c8a786be2a480e5732b800%2F279759ee3d6d55fb8946b1fb65224f4a21a4dd6f.jpg"},
+			  { name: "純元",Radius:"40",image:"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1480313371,45402167&fm=15&gp=0.jpg"},
+
+                          { name: "雍正",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588500546887&di=c854e09023d62c22e5399d5fee0a47cd&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn11%2F197%2Fw623h374%2F20181028%2F528e-hnaivxp7064939.jpg"}, 
+
+			  { name: "烏拉那拉氏",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588500504369&di=ca82b6ebdb9239885d435cf9ffc3b861&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20170208%2Fe6e6fd2b2a6c425585513f6c5807871b_th.jpg"},
+
+                          { name: "果郡王",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588500618039&di=e5fe4b25680cc43449808c0f6c3d0269&imgtype=0&src=http%3A%2F%2F09.imgmini.eastday.com%2Fmobile%2F20180326%2F20180326013246_5fa9e3c43ad2b35bfd91abb53b084d6d_1.jpeg"}, 
+
+			  { name: "甄嬛",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588500473924&di=576e2c8bf9c8a2a5a216f5f5c3bda6fd&imgtype=0&src=http%3A%2F%2Fp3.ssl.cdn.btime.com%2Ft01b506b7fc97e8438c.jpg"},
+
+                          { name: "崔槿汐（桂嬷嬷）",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588500661388&di=e1e9a096569562bcbb8d7dfc18b26109&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171010%2F4bc07b8d1ad34f819ecff0d73046ad54.jpeg"},
+
+ 			  { name: "晴兒",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588500813365&di=d2e06079c88251977f03465132c9ba20&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn14%2F357%2Fw655h502%2F20180826%2Fb8d0-hifuvph0538986.jpg"},
+
+ 			  { name: "如懿",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588500879915&di=812eb054148617fbbb41d8f13138a38f&imgtype=0&src=http%3A%2F%2F04imgmini.eastday.com%2Fmobile%2F20180902%2F20180902164731_8f67dd660add9b2fb8a41d37a3a80111_8_mwpm_03200403.jpg"}, 
+			  { name: "香妃",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588500905158&di=2c6a2eba7a652e259a70ae46a05678a1&imgtype=0&src=http%3A%2F%2F05.imgmini.eastday.com%2Fmobile%2F20180406%2F20180406074630_7c8cf442ac36ce616a2d411d6eab0f29_18.jpeg"},
+
+ 			  { name: "容嬷嬷",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588501624515&di=20cbc1ee848753e6e7db3f4adc05c671&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201703%2F11%2F20170311192341_KALBP.thumb.700_0.jpeg"},
+
+	 	   	  { name: "高贵妃",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588501693424&di=77f7cfaf0e1479a9ad2beeefaa55d3d9&imgtype=0&src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F0720%2F6692A39F3142FEA902043B6324DDD8A31CFCC2AA_size25_w451_h353.jpeg"},
+
+			  { name: "乾隆",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588501753279&di=fb0957de44b891e65cf9b32b96589257&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180815%2F3135df1617754a4ab3b4b10a26345c07.jpeg"},
+
+			  { name: "富察氏",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588501791929&di=25503374e4dcb0d10f4818318e5beb3c&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn22%2F400%2Fw600h600%2F20180904%2F5395-hiqtcap3351028.jpg"},
+
+			  { name: "愉贵妃",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588501829878&di=3428fb8de78c9a9f170cb54bf9f818ba&imgtype=0&src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F0910%2F3671AFBAB2D996F4478664402C5613ACBADDDC8D_size55_w536_h404.jpeg"},
+
+			  { name: "令妃",Radius:"40",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588501862691&di=2fda7f7c3ce81613e0c29d9392456e72&imgtype=0&src=http%3A%2F%2Fwww.hinews.cn%2Fpic%2F0%2F16%2F22%2F20%2F16222077_051704.jpg"},
+
+			  { name: "富察傅恒",Radius:"40",image:"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1158165918,3031581374&fm=15&gp=0.jpg"},
+
+			  { name: "永琪",Radius:"40",image:"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1111934442,1412218191&fm=15&gp=0.jpg"}];
+
+             var links = [ { source : 2  , target: 0 ,relation:"妃子"} , 
+			   { source : 2  , target: 1 ,relation:"第一任皇后"} ,
+                           { source : 2  , target: 3 ,relation:"第二任皇后"} , 
+			   { source : 2  , target: 4 ,relation:"兄弟"} ,
+                           { source : 2  , target: 5 ,relation:"愛妃"} ,
+			   { source : 0  , target: 2 ,relation:"妃子"} , 
+			   { source : 1  , target: 2 ,relation:"第一任皇后"} ,
+                           { source : 3  , target: 2 ,relation:"第二任皇后"} , 
+			   { source : 4  , target: 2 ,relation:"兄弟"} ,
+                           { source : 5  , target: 2 ,relation:"愛妃"} , 
+		           { source : 4  , target: 5 ,relation:"情侶"} , 
+			   { source : 5  , target: 4 ,relation:"情侶"} , 
+			   { source : 5  , target: 6 ,relation:"主僕"} ,
+			   { source : 6  , target: 5 ,relation:"主僕"} ,
+   	  		   { source : 4  , target: 7 ,relation:"孫女"} ,
+ 			   { source : 5  , target: 12 ,relation:"養母"} ,
+			   { source : 12  , target: 9 ,relation:"愛妃"} , 
+			   { source : 3  ,  target: 8 ,relation:"姪女"} , 
+			   { source : 12  , target: 8 ,relation:"第二任皇后"} , 
+ 			   { source : 12  , target: 13 ,relation:"第一任皇后" } ,
+ 			   { source : 8  , target: 12 ,relation:"第二任皇后"} , 
+ 			   { source : 13  , target: 12 ,relation:"第一任皇后" } ,
+			   { source : 8  , target: 10 ,relation:"主僕"} ,
+			   { source : 10  , target: 8 ,relation:"主僕"} ,
+			   { source : 12  , target: 11 ,relation:"妃子"} ,  
+ 			   { source : 12  , target: 14 ,relation:"妃子"} , 
+ 			   { source : 12  , target: 15 ,relation:"愛妃"} , 
+ 			   { source : 11  , target: 12 ,relation:"妃子"} ,  
+ 			   { source : 14  , target: 12 ,relation:"妃子"} , 
+ 			   { source : 15  , target: 12 ,relation:"愛妃"} , 
+			   { source : 16  , target: 15 ,relation:"情侶"} , 
+			   { source : 15  , target: 16 ,relation:"情侶"} , 
+		   	   { source : 13  , target: 16 ,relation:"姐弟"} , 
+			   { source : 16  , target: 13 ,relation:"姐弟"} ,
+			   { source : 17  , target: 14 ,relation:"母子"}, 
+ 			   { source : 14  , target: 17 ,relation:"母子"} ];    
+           
+
+  var color = d3.scaleOrdinal()
+                 color.range([
+		'#c9c0d3','#c9c0d3',
+                '#7a7281',
+                '#c9c0d3','#c9c0d3',
+                '#a27e7e',
+		'#ead0d1','#e0cdcf','#c1cbd7',
+		'#c1cbd7','#ead0d1','#c1cbd7',
+		'#8696a7',
+                '#c1cbd7','#c1cbd7',
+		'#c1cbd7','#b5c4b1','#b5c4b1'])   
+
+
+         
+     
+            var simulation = d3.forceSimulation(nodes)
+                  .force("link", d3.forceLink(links).distance(180))
+                  .force("charge",d3.forceManyBody().strength(-300))
+                  .force("center",d3.forceCenter(width/2, height/2));
+     
+            simulation
+                  .nodes(nodes)
+                  .on("tick", ticked);
+ 
+              simulation.force("link")
+                  .links(links);                    
+ 
+
+
+
+      
+
+
+	var edges_line = svg.selectAll("line")
+                .data(links)
+                .enter()
+                .append("line")
+                .style("stroke","#cca")
+                .style("stroke-width",1.5) ;
+
+            
+
+
+        var svg_nodes = svg.selectAll("image")
+              .data(nodes)
+              .enter()
+              .append("circle")
+              .attr("cx", function(d) { return d.x; })
+              .attr("cy", function(d) { return d.y; })
+              .attr("r", function (d) {return d.Radius;})
+             
+ 	     .attr("fill", function(d, i){
+
+                                   
+                                    var defs = svg.append("defs").attr("id", "imgdefs")
+                                    var catpattern = defs.append("pattern")
+                                                            .attr("id", "catpattern" + i)
+                                                            .attr("height", 1)
+                                                            .attr("width", 1)
+
+                                    catpattern.append("image")
+                                            
+                                            .attr("width", d.Radius * 2.5)
+                                            .attr("height",d.Radius * 2)
+                                            .attr("xlink:href", d.image)
+
+                                    return "url(#catpattern" + i + ")";
+
+                                })
+
+		
+              .on("mouseover",function(d,i){  
+		edges_text.style("font-size","20px")     
+                edges_text.style("opacity",function(edge){
+                  if( edge.target == d ){return 0.8;}
+			return 0;})
+		
+		edges_line.style("stroke-width", function (edge) {
+                        if (edge.target == d) {return 6;}
+                        return 1.5;})
+ 		
+
+		svg_nodes.attr("r", function (edge) {
+ 		     if (edge.name ===  d.name  ) {return 60;} 
+			return 20;		
+                    })
+
+
+             	node_texts.style("fill", function (edge) {
+ 		     if (edge.name ===  d.name  ) {return "black";} 
+			return "gray";		
+                    })
+
+	  
+               node_texts.style("font-size", function (edge) {
+ 		     if (edge.name ===  d.name  ) {return "30px";} 
+                       return "12px";
+				
+                    })
+
+                svg_nodes.attr("fill", function(d,i){return color(i); })
+
+                 
+	       })
+
+	
+	       .on("mouseout",function(d,i){
+               	    node_texts.style("fill","black")
+ 		    node_texts.style("font-size","12px")
+ 	            edges_text.style("opacity", 0)
+ 		    edges_line.style("opacity", 1)
+ 		    edges_line.style("stroke-width", 1.5)
+		    node_texts.style("opacity", 1)
+		    svg_nodes.style("opacity", 1)
+ 		    svg_nodes.attr("r", function (d) {return d.Radius;})
+			svg_nodes.attr("fill", function(d, i){
+
+                                   
+                                    var defs = svg.append("defs").attr("id", "imgdefs")
+                                    var catpattern = defs.append("pattern")
+                                                            .attr("id", "catpattern" + i)
+                                                            .attr("height", 1)
+                                                            .attr("width", 1)
+
+                                    catpattern.append("image")
+                                            
+                                            .attr("width", d.Radius * 2)
+                                            .attr("height", d.Radius * 2)
+                                            .attr("xlink:href", d.image)
+
+                                    return "url(#catpattern" + i + ")";
+
+                                })
+ 		
+
+ 		})
+
+	       .call(d3.drag()
+	       .on("start", dragstarted)
+               .on("drag", dragged)
+               .on("end", dragended));
+              
+
+                        
+
+      var edges_text = svg.selectAll(".linetext")
+                                .data(links)
+                                .enter()
+                                .append("text")
+				.style("opacity","0")
+				.style("fill","black")
+				.style("font-size", (12 + "px"))
+                		.attr("y", ".33em")
+               		        .attr('text-anchor', "middle")
+                                .text(function(d){
+                                    return d.relation;
+                                });
+
+
+
+
+       
+
+
+                
+         
+	 var node_texts = svg.selectAll(".nodetext")
+                     .data(nodes)
+                     .enter()
+                     .append("text")
+                     .attr("dx", -10)
+                     .attr("dy", -40)
+		     .style("fill","black")
+		     .style("font-size", (13 + "px"))
+                     .text(function(d){
+                        return d.name;
+                     });
+
+		  
+             
+            
+          
+
+
+               function dragstarted(d) {
+                  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+                  d.fx = d.x;
+                  d.fy = d.y;
+                }
+ 
+                function dragged(d) {
+                  d.fx = d3.event.x;
+                  d.fy = d3.event.y;
+                }
+ 
+                function dragended(d) {
+                  if (!d3.event.active) simulation.alphaTarget(0);
+                  d.fx = null;
+                  d.fy = null;
+                }
+
+
+
+
+                function ticked() {
+                    edges_line.attr("x1", function(d) { return d.source.x; })
+                        .attr("y1", function(d) { return d.source.y; })
+                        .attr("x2", function(d) { return d.target.x; })
+                        .attr("y2", function(d) { return d.target.y; });
+ 
+                    svg_nodes.attr("cx", function(d) { return d.x; })
+                        .attr("cy", function(d) { return d.y; });
+                     
+                    node_texts.attr("x", function(d){ return d.x-2; })
+                       .attr("y", function(d){ return d.y-2; });
+
+
+
+		 edges_text.attr("x",function(d){ return (d.source.x + d.target.x) / 2 ; });
+                 edges_text.attr("y",function(d){ return (d.source.y + d.target.y) / 2 ; });
+
+                  }
+
+
+    </script>
+</style>
+</body>
+</html>
+
+<head>
+<style>
+a:link {text-decoration:none;}    
+a:visited {text-decoration:none;} 
+a:hover {text-decoration:underline;}   
+a:active {text-decoration:underline;}  
+</style>
+</head>
+
+<body>
+<p style="font:15px sans-serif"><b><a href="https://baijiahao.baidu.com/s?id=1607575451485257804&wfr=spider&for=pc" target="_blank">資料來源(延禧宮略+甄嬛傳+如懿傳+還珠格格）</a></b>
+
+
+
+
+<p style="font:15px sans-serif">
+近一兩年，清宮劇盛行，康熙雍正乾隆這三個朝代的故事尤為多，觀眾朋友（比如在下），非常好奇諸劇人物之間的聯繫，故有此圖的誕生，希望可以幫助各位觀眾朋友釐清這複雜的人物關係^^
+</p>
+<p style="font:10px sans-serif">
+課本上有關樹狀圖（Node-Link Diagrams）的設計，覺得這是非常好的方式表達複雜人物關係的方式。為了讓使用者一目了然的了解人物，截出了影視作品中他們的經典形象，並在上方標註了名字。當使用者將滑鼠移動至人物上時，為了使用者注意力集中，採取將照片，其他人物的名字隱藏的方法，把該人物的名字字體和圓圈加大，該人物相關的人物關係線加粗，顯示其關係。
+
+為了增強互動性，樹狀圖採用可以拖拉的形式呈現，使用者可以自己拖動人物頭像，通過將樹狀圖展開的過程，更加了解人物之間關係。
+
+同時，參考的經驗法則character co-occurence，以關係最為複雜的“雍正”，“甄嬛”，“乾隆”分為三個模塊，並將其相關人物用藍色，紅色，紫色區分（因為者三個顏色視覺上最為和諧）。
+</p>
+</body>
+
